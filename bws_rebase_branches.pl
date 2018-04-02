@@ -59,9 +59,9 @@ foreach my $branch_key ( keys %$branches ) {
 
     qx{ git checkout $branch_to_rebase };
 
-    my $last_commit_before_cherry_picks = qx{ git log --grep='BWS-PKG - Set bwsbranch to bywater-v' --pretty=format:"%H" --no-patch | tail -n 1 };
+    my $last_commit_before_cherry_picks = qx{ git log --grep='BWS-PKG - Set bwsbranch to bywater-v' --pretty=format:"%H" --no-patch | head -n 1 };
     $last_commit_before_cherry_picks =~ s/^\s+|\s+$//g;
-    my $last_commit_before_cherry_picks_oneline = qx{ git log --grep='BWS-PKG - Set bwsbranch to bywater-v' --pretty=oneline --no-patch | tail -n 1 };
+    my $last_commit_before_cherry_picks_oneline = qx{ git log --grep='BWS-PKG - Set bwsbranch to bywater-v' --pretty=oneline --no-patch | head -n 1 };
     $last_commit_before_cherry_picks_oneline =~ s/^\s+|\s+$//g;
     say "LAST COMMIT BEFORE CHERRY PICKS: $last_commit_before_cherry_picks_oneline";
 
