@@ -89,7 +89,7 @@ foreach my $branch_key ( keys %$branches ) {
 
         if ( $ENV{DO_IT} ) {
             say "PUSHING NEW BRANCH $new_branch";
-            qx{ git push github HEAD:refs/heads/$new_branch -f };
+            qx{ git push -f github HEAD:refs/heads/$new_branch };
         } else {
             say "DEBUG MODE: NOT PUSHING $new_branch";
         }
