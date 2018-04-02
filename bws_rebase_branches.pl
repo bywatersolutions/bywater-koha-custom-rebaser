@@ -21,7 +21,6 @@ my $branches = {
 };
 
 $ENV{DO_IT} //= 0;
-$ENV{DO_IT} = 0; #FIXME DEBUG TEST
 
 die "No ENV set for TRAVIS_BRANCH" unless $ENV{TRAVIS_BRANCH};
 die "No ENV set for GITHUB_TOKEN" unless $ENV{GITHUB_TOKEN};
