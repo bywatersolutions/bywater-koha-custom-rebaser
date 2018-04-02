@@ -20,6 +20,15 @@ my $branches = {
     washoe      => 'WASHOE',
 };
 
+$ENV{DO_IT} //= 0;
+
+die "No ENV set for TRAVIS_BRANCH" unless $ENV{TRAVIS_BRANCH};
+die "No ENV set for GITHUB_TOKEN" unless $ENV{GITHUB_TOKEN};
+say "TESTING MODE: ENV DO_IT not set to $ENV{GITHUB_TOKEN}" if $ENV{GITHUB_TOKEN};
+
+say "TRAVIS_BRANCH: $ENV{TRAVIS_BRANCH}";
+say "DO_IT: $ENV{DO_IT}";
+
 # If run from travis, we only want to run for newly pushed bywater base branches
 if ( $ENV{TRAVIS_BRANCH} ) {
     unless ( $ENV{TRAVIS_BRANCH} =~ /^bywater-v/ ) {
@@ -28,7 +37,9 @@ if ( $ENV{TRAVIS_BRANCH} ) {
     }
 }
 
+qx{ git remote rm github };
 qx{ git remote add github https://$ENV{GITHUB_TOKEN}\@github.com/bywatersolutions/bywater-koha.git };
+qx{ git fetch --all };
 
 my @failed_branches;
 
@@ -37,9 +48,11 @@ $head =~ s/^\s+|\s+$//g;    # Trim whitespace
 say "HEAD: $head";
 
 foreach my $branch_key ( keys %$branches ) {
+    say "\nWORKING ON $branch_key";
     my $branch_to_rebase = qx{ git branch -r | grep $branch_key | tail -1 };
+    say "FOUND *$branch_to_rebase*";
     $branch_to_rebase =~ s/^\s+|\s+$//g;    # Trim whitespace from both ends
-    say "\nWORKING ON $branch_key, FOUND $branch_to_rebase";
+    say "AFTER CLEANUP: *$branch_to_rebase*";
 
     my ( $branch_to_rebase_remote, $branch_to_rebase_branch ) =
       split( '/', $branch_to_rebase );
@@ -64,25 +77,25 @@ foreach my $branch_key ( keys %$branches ) {
     qx{ git cherry-pick $first_commit^..$last_commit };
     if ( $? == 0 ) {
         say "CHERRY PICK SUCCESSFUL";
+
+        qx{ sed -i -e 's/bywater/$branch_key/' misc/bwsbranch };
+        my $branch_descriptor = $branches->{$branch_key};
+        my $branch = qx{ cat misc/bwsbranch };
+        qx{ git commit -a -m "$branch_descriptor - Set bwsbranch to $branch" };
+        say "COMMITED bwsbranch UPDATE: " . qx{ git rev-parse HEAD };
+        my $new_branch = qx{ cat misc/bwsbranch };
+
+        if ( $ENV{DO_IT} ) {
+            say "PUSHING NEW BRANCH $new_branch";
+            qx{ git push github HEAD:refs/heads/$new_branch -f };
+        } else {
+            say "DEBUG MODE: NOT PUSHING $new_branch";
+        }
+
     } else {
         say "CHERRY PICK FAILED";
         push( @failed_branches, $branch_to_rebase_branch );
         qx{ git cherry-pick --abort };
-        qx{ git reset --hard };
-    }
-
-    qx{ sed -i -e 's/bywater/$branch_key/' misc/bwsbranch };
-    my $branch_descriptor = $branches->{$branch_key};
-    my $branch = qx{ cat misc/bwsbranch };
-    qx{ git commit -a -m "$branch_descriptor - Set bwsbranch to $branch" };
-    say "COMMITED bwsbranch UPDATE: " . qx{ git rev-parse HEAD };
-    my $new_branch = qx{ cat misc/bwsbranch };
-
-    if ( $ENV{DO_IT} ) {
-        say "PUSHING NEW BRANCH $new_branch";
-        qx{ git push github HEAD:refs/heads/$new_branch -f };
-    } else {
-        say "DEBUG MODE: NOT PUSHING $new_branch";
     }
 
     qx{ git reset --hard }; # Not necessary, but just in case
