@@ -40,7 +40,9 @@ if ( $ENV{TRAVIS_BRANCH} ) {
 
 qx{ git remote rm github };
 qx{ git remote add github https://$ENV{GITHUB_TOKEN}\@github.com/bywatersolutions/bywater-koha.git };
-qx{ git fetch --all };
+say "Fetching github remote";
+qx{ git fetch github };
+say "Done fetching github remote"
 
 my @failed_branches;
 
