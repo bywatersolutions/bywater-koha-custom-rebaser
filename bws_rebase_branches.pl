@@ -24,10 +24,11 @@ $ENV{DO_IT} //= 0;
 
 die "No ENV set for TRAVIS_BRANCH" unless $ENV{TRAVIS_BRANCH};
 die "No ENV set for GITHUB_TOKEN" unless $ENV{GITHUB_TOKEN};
-say "TESTING MODE: ENV DO_IT not set to $ENV{GITHUB_TOKEN}" if $ENV{GITHUB_TOKEN};
 
 say "TRAVIS_BRANCH: $ENV{TRAVIS_BRANCH}";
 say "DO_IT: $ENV{DO_IT}";
+
+say "RUNNING IN TEST MODE: Rebased branches will not be pushed!" unless $ENV{DO_IT};
 
 # If run from travis, we only want to run for newly pushed bywater base branches
 if ( $ENV{TRAVIS_BRANCH} ) {
