@@ -38,7 +38,9 @@ if ( $ENV{TRAVIS_BRANCH} ) {
     }
 }
 
+say "Removing existing github repo, if any";
 qx{ git remote rm github };
+say "Adding github repo";
 qx{ git remote add github https://$ENV{GITHUB_TOKEN}\@github.com/bywatersolutions/bywater-koha.git };
 say "Fetching github remote";
 qx{ git fetch -v --progress github };
