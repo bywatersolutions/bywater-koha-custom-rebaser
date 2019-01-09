@@ -18,6 +18,7 @@ my $branches = {
     switch      => 'SWITCH',
     vokal       => 'VOKAL',
     washoe      => 'WASHOE',
+    clic        => 'CLIC',
 };
 
 $ENV{DO_IT} //= 0;
