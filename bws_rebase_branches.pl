@@ -4,22 +4,11 @@ use feature 'say';
 use warnings;
 use strict;
 
-my $branches = {
-    barcodeprfx => 'BARCODE PREFIXES',
-    bluehill    => 'BLUEHILL',
-#   huntsville  => 'HCPL',
-    masscat     => 'MASSCAT',
-    mdah        => 'MDAH',
-    mtpl        => 'MTPL',
-    pacifica    => 'PACIFICA',
-    plano       => 'PLANO',
-    roundrock   => 'ROUND ROCK',
-    sdlaw       => 'SDLAW',
-    switch      => 'SWITCH',
-    vokal       => 'VOKAL',
-    washoe      => 'WASHOE',
-    clic        => 'CLIC',
-};
+use File::Slurp;
+use FindBin qw($Bin);
+use JSON;
+
+my $branches = from_json( read_file("$Bin/branches.json") );
 
 $ENV{DO_IT} //= 0;
 
