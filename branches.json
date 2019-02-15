@@ -1,15 +1,54 @@
 {
-  "barcodeprfx": "BARCODE PREFIXES",
-  "bluehill": "BLUEHILL",
-  "masscat": "MASSCAT",
-  "mdah": "MDAH",
-  "mtpl": "MTPL",
-  "pacifica": "PACIFICA",
-  "plano": "PLANO",
-  "roundrock": "ROUND ROCK",
-  "sdlaw": "SDLAW",
-  "vokal": "VOKAL",
-  "washoe": "WASHOE",
-  "clic": "CLIC",
-  "vatech": "VATECH"
+  "barcodeprfx": {
+    "message_prefix": "BARCODE PREFIXES",
+    "base_branch": "bywater"
+  },
+  "bluehill": {
+    "message_prefix": "BLUEHILL",
+    "base_branch": "bywater"
+  },
+  "mdah": {
+    "message_prefix": "MDAH",
+    "base_branch": "bywater"
+  },
+  "mtpl": {
+    "message_prefix": "MTPL",
+    "base_branch": "bywater"
+  },
+  "pacifica": {
+    "message_prefix": "PACIFICA",
+    "base_branch": "bywater"
+  },
+  "plano": {
+    "message_prefix": "PLANO",
+    "base_branch": "bywater"
+  },
+  "roundrock": {
+    "message_prefix": "ROUND ROCK",
+    "base_branch": "bywater"
+  },
+  "sdlaw": {
+    "message_prefix": "SDLAW",
+    "base_branch": "bywater"
+  },
+  "vokal": {
+    "message_prefix": "VOKAL",
+    "base_branch": "bywater"
+  },
+  "washoe": {
+    "message_prefix": "WASHOE",
+    "base_branch": "bywater"
+  },
+  "vatech": {
+    "message_prefix": "VATECH",
+    "base_branch": "bywater"
+  },
+  "clic": {
+    "message_prefix": "CLIC",
+    "base_branch": "barcodeprfx"
+  },
+  "masscat": {
+    "message_prefix": "MASSCAT",
+    "base_branch": "barcodeprfx"
+  }
 }

@@ -41,9 +41,14 @@ my @failed_branches;
 my $head = qx{ git rev-parse HEAD };
 $head =~ s/^\s+|\s+$//g;    # Trim whitespace
 say "HEAD: $head";
+my $heads = { bywater => $head };
 
 foreach my $branch_key ( keys %$branches ) {
     say "\nWORKING ON $branch_key";
+    my $branch_descriptor = $branches->{$branch_key}->{message_prefix};;
+    my $base_branch = $branches->{$branch_key}->{base_branch} || 'bywater';
+    $head = $heads->{$base_branch};
+
     my $branch_to_rebase = qx{ git branch -r | grep $branch_key | tail -1 };
     say "FOUND *$branch_to_rebase*";
     $branch_to_rebase =~ s/^\s+|\s+$//g;    # Trim whitespace from both ends
@@ -74,7 +79,6 @@ foreach my $branch_key ( keys %$branches ) {
         say "CHERRY PICK SUCCESSFUL";
 
         qx{ sed -i -e 's/bywater/$branch_key/' misc/bwsbranch };
-        my $branch_descriptor = $branches->{$branch_key};
         my $branch = qx{ cat misc/bwsbranch };
         qx{ git commit -a -m "$branch_descriptor - Set bwsbranch to $branch" };
         say "COMMITED bwsbranch UPDATE: " . qx{ git rev-parse HEAD };
@@ -83,6 +87,10 @@ foreach my $branch_key ( keys %$branches ) {
         if ( $ENV{DO_IT} ) {
             say "PUSHING NEW BRANCH $new_branch";
             qx{ git push -f github HEAD:refs/heads/$new_branch };
+
+            my $new_head = qx{ git rev-parse HEAD };
+            $new_head =~ s/^\s+|\s+$//g;    # Trim whitespace
+            $heads->{$branch_key} = $new_head;
         } else {
             say "DEBUG MODE: NOT PUSHING $new_branch";
         }
@@ -94,7 +102,7 @@ foreach my $branch_key ( keys %$branches ) {
     }
 
     qx{ git reset --hard }; # Not necessary, but just in case
-    qx{ git checkout $head };
+    qx{ git checkout $heads->{bywater} };
 }
 
 qx{ git remote remove github };
