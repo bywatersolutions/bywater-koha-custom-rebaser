@@ -27,10 +27,6 @@
     "message_prefix": "ROUND ROCK",
     "base_branch": "bywater"
   },
-  "sdlaw": {
-    "message_prefix": "SDLAW",
-    "base_branch": "bywater"
-  },
   "vokal": {
     "message_prefix": "VOKAL",
     "base_branch": "bywater"
