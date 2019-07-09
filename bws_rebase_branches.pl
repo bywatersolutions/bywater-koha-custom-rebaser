@@ -91,6 +91,10 @@ foreach my $branch_key ( keys %$branches ) {
             my $new_head = qx{ git rev-parse HEAD };
             $new_head =~ s/^\s+|\s+$//g;    # Trim whitespace
             $heads->{$branch_key} = $new_head;
+
+            say "Fetching remotes";
+            qx{ git fetch --all };
+            say "Done fetching remotes";
         } else {
             say "DEBUG MODE: NOT PUSHING $new_branch";
         }
