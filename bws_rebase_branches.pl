@@ -74,10 +74,26 @@ foreach my $branch_key ( keys %$branches ) {
     say "LAST COMMIT: $last_commit";
 
     qx{ git checkout $head };
-    qx{ git cherry-pick $first_commit^..$last_commit };
-    if ( $? == 0 ) {
-        say "CHERRY PICK SUCCESSFUL";
+    my @commits = reverse( @commits_since );
+    my $success = 1;
+    foreach my $commit ( @commits  ) {
+        last unless $success;
 
+        my $output = qx{ git cherry-pick $commit };
+        
+        if ( $? == 0 ) {
+            say "CHERRY PICK $commit SUCCESSFUL";
+        } elsif ( $output =~ /^The previous cherry-pick is now empty/ ) {
+            qx{ git reset };
+        } else {
+            $success = 0;
+            say "CHERRY PICK $commit FAILED";
+            push( @failed_branches, $branch_to_rebase_branch );
+            qx{ git cherry-pick --abort };
+        }
+    }
+
+    if ( $success == 1 ) {
         qx{ sed -i -e 's/bywater/$branch_key/' misc/bwsbranch };
         my $branch = qx{ cat misc/bwsbranch };
         qx{ git commit -a -m "$branch_descriptor - Set bwsbranch to $branch" };
@@ -98,12 +114,7 @@ foreach my $branch_key ( keys %$branches ) {
         } else {
             say "DEBUG MODE: NOT PUSHING $new_branch";
         }
-
-    } else {
-        say "CHERRY PICK FAILED";
-        push( @failed_branches, $branch_to_rebase_branch );
-        qx{ git cherry-pick --abort };
-    }
+    } 
 
     qx{ git reset --hard }; # Not necessary, but just in case
     qx{ git checkout $heads->{bywater} };
