@@ -70,10 +70,7 @@ foreach my $branch_key ( keys %$branches ) {
       qx{ git rev-list $last_commit_before_cherry_picks..HEAD };
     $_ =~ s/^\s+|\s+$//g for @commits_since;
 
-    my $last_commit = $commits_since[1]; # skip 0, it's the bwsbranch commit
-    my $first_commit = $commits_since[-1];
-    say "FIRST COMMIT: $first_commit";
-    say "LAST COMMIT: $last_commit";
+    shift @commits_since; # skip first commit, it's the bwsbranch commit
 
     qx{ git checkout $head };
     my @commits = reverse(@commits_since);
