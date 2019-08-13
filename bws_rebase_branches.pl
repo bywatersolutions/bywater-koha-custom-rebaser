@@ -8,7 +8,8 @@ use File::Slurp;
 use FindBin qw($Bin);
 use JSON;
 
-my $branches = from_json( read_file("$Bin/branches.json") );
+my $json     = from_json( read_file("$Bin/branches.json") );
+my $branches = $json->{branches};
 
 $ENV{DO_IT} //= 0;
 
@@ -44,13 +45,15 @@ $head =~ s/^\s+|\s+$//g;    # Trim whitespace
 say "HEAD: $head";
 my $heads = { bywater => $head };
 
-foreach my $branch_key ( keys %$branches ) {
-    say "\nWORKING ON $branch_key";
-    my $branch_descriptor = $branches->{$branch_key}->{message_prefix};
-    my $base_branch = $branches->{$branch_key}->{base_branch} || 'bywater';
+foreach my $branch (@$branches) {
+    my $branch_name    = $branch->{name};
+    my $message_prefix = $branch->{message_prefix};
+    my $base_branch    = $branch->{base_branch};
+
+    say "\nWORKING ON $branch_name";
     $head = $heads->{$base_branch};
 
-    my $branch_to_rebase = qx{ git branch -r | grep $branch_key | tail -1 };
+    my $branch_to_rebase = qx{ git branch -r | grep $branch_name | tail -1 };
     say "FOUND *$branch_to_rebase*";
     $branch_to_rebase =~ s/^\s+|\s+$//g;    # Trim whitespace from both ends
     say "AFTER CLEANUP: *$branch_to_rebase*";
@@ -70,7 +73,7 @@ foreach my $branch_key ( keys %$branches ) {
       qx{ git rev-list $last_commit_before_cherry_picks..HEAD };
     $_ =~ s/^\s+|\s+$//g for @commits_since;
 
-    shift @commits_since; # skip first commit, it's the bwsbranch commit
+    shift @commits_since;    # skip first commit, it's the bwsbranch commit
 
     qx{ git checkout $head };
     my @commits = reverse(@commits_since);
@@ -94,9 +97,9 @@ foreach my $branch_key ( keys %$branches ) {
     }
 
     if ($success) {
-        qx{ sed -i -e 's/bywater/$branch_key/' misc/bwsbranch };
+        qx{ sed -i -e 's/bywater/$branch_name/' misc/bwsbranch };
         my $branch = qx{ cat misc/bwsbranch };
-        qx{ git commit -a -m "$branch_descriptor - Set bwsbranch to $branch" };
+        qx{ git commit -a -m "$message_prefix - Set bwsbranch to $branch" };
         say "COMMITED bwsbranch UPDATE: " . qx{ git rev-parse HEAD };
         my $new_branch = qx{ cat misc/bwsbranch };
 
@@ -106,7 +109,7 @@ foreach my $branch_key ( keys %$branches ) {
 
             my $new_head = qx{ git rev-parse HEAD };
             $new_head =~ s/^\s+|\s+$//g;    # Trim whitespace
-            $heads->{$branch_key} = $new_head;
+            $heads->{$branch_name} = $new_head;
 
             say "Fetching remotes";
             qx{ git fetch --all };
