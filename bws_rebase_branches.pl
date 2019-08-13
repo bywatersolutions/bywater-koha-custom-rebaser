@@ -78,6 +78,7 @@ foreach my $branch_key ( keys %$branches ) {
     my $success = 1;
     foreach my $commit ( @commits  ) {
         my $output = qx{ git cherry-pick $commit };
+        say "CHERRY PICK OUTPUT: $output";
         
         if ( $? == 0 ) {
             say "CHERRY PICK $commit SUCCESSFUL";
