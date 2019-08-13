@@ -13,12 +13,13 @@ my $branches = from_json( read_file("$Bin/branches.json") );
 $ENV{DO_IT} //= 0;
 
 die "No ENV set for TRAVIS_BRANCH" unless $ENV{TRAVIS_BRANCH};
-die "No ENV set for GITHUB_TOKEN" unless $ENV{GITHUB_TOKEN};
+die "No ENV set for GITHUB_TOKEN"  unless $ENV{GITHUB_TOKEN};
 
 say "TRAVIS_BRANCH: $ENV{TRAVIS_BRANCH}";
 say "DO_IT: $ENV{DO_IT}";
 
-say "RUNNING IN TEST MODE: Rebased branches will not be pushed!" unless $ENV{DO_IT};
+say "RUNNING IN TEST MODE: Rebased branches will not be pushed!"
+  unless $ENV{DO_IT};
 
 # If run from travis, we only want to run for newly pushed bywater base branches
 if ( $ENV{TRAVIS_BRANCH} ) {
@@ -45,7 +46,7 @@ my $heads = { bywater => $head };
 
 foreach my $branch_key ( keys %$branches ) {
     say "\nWORKING ON $branch_key";
-    my $branch_descriptor = $branches->{$branch_key}->{message_prefix};;
+    my $branch_descriptor = $branches->{$branch_key}->{message_prefix};
     my $base_branch = $branches->{$branch_key}->{base_branch} || 'bywater';
     $head = $heads->{$base_branch};
 
@@ -65,7 +66,8 @@ foreach my $branch_key ( keys %$branches ) {
     $last_commit_before_cherry_picks_oneline =~ s/^\s+|\s+$//g;
     say "LAST COMMIT BEFORE CHERRY PICKS: $last_commit_before_cherry_picks_oneline";
 
-    my @commits_since = qx{ git rev-list $last_commit_before_cherry_picks..HEAD };
+    my @commits_since =
+      qx{ git rev-list $last_commit_before_cherry_picks..HEAD };
     $_ =~ s/^\s+|\s+$//g for @commits_since;
 
     my $last_commit = $commits_since[1]; # skip 0, it's the bwsbranch commit
@@ -74,17 +76,19 @@ foreach my $branch_key ( keys %$branches ) {
     say "LAST COMMIT: $last_commit";
 
     qx{ git checkout $head };
-    my @commits = reverse( @commits_since );
+    my @commits = reverse(@commits_since);
     my $success = 1;
-    foreach my $commit ( @commits  ) {
+    foreach my $commit (@commits) {
         my $output = qx{ git cherry-pick $commit };
         say "CHERRY PICK OUTPUT: $output";
-        
+
         if ( $? == 0 ) {
             say "CHERRY PICK $commit SUCCESSFUL";
-        } elsif ( $output =~ /The previous cherry-pick is now empty/ ) {
+        }
+        elsif ( $output =~ /The previous cherry-pick is now empty/ ) {
             qx{ git reset };
-        } else {
+        }
+        else {
             $success = 0;
             say "CHERRY PICK $commit FAILED";
         }
@@ -92,7 +96,7 @@ foreach my $branch_key ( keys %$branches ) {
         last unless $success;
     }
 
-    if ( $success ) {
+    if ($success) {
         qx{ sed -i -e 's/bywater/$branch_key/' misc/bwsbranch };
         my $branch = qx{ cat misc/bwsbranch };
         qx{ git commit -a -m "$branch_descriptor - Set bwsbranch to $branch" };
@@ -110,26 +114,29 @@ foreach my $branch_key ( keys %$branches ) {
             say "Fetching remotes";
             qx{ git fetch --all };
             say "Done fetching remotes";
-        } else {
+        }
+        else {
             say "DEBUG MODE: NOT PUSHING $new_branch";
         }
-    } else {
+    }
+    else {
         say "FAILED TO AUTO-REBASE $branch_to_rebase_branch";
         push( @failed_branches, $branch_to_rebase_branch );
         qx{ git cherry-pick --abort };
     }
 
-    qx{ git reset --hard }; # Not necessary, but just in case
+    qx{ git reset --hard };    # Not necessary, but just in case
     qx{ git checkout $heads->{bywater} };
 }
 
 qx{ git remote remove github };
 
-if ( @failed_branches ) {
+if (@failed_branches) {
     say "\n\nSOME BRANCHES FAILED TO AUTO-REBASE";
     say $_ for @failed_branches;
     exit 1;
-} else {
+}
+else {
     say "\n\nALL BRANCHES AUTO-REBASED SUCCESSFULLY!";
     exit 0;
 }
