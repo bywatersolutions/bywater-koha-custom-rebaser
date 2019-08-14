@@ -49,6 +49,9 @@ foreach my $branch (@$branches) {
     my $branch_name    = $branch->{name};
     my $message_prefix = $branch->{message_prefix};
     my $base_branch    = $branch->{base_branch};
+    my $stop_commit    = $branch->{stop_commit};
+
+    $stop_commit ||= 'BWS-PKG - Set bwsbranch to bywater-v';
 
     say "\nWORKING ON $branch_name";
     $head = $heads->{$base_branch};
@@ -63,9 +66,9 @@ foreach my $branch (@$branches) {
 
     qx{ git checkout $branch_to_rebase };
 
-    my $last_commit_before_cherry_picks = qx{ git log --grep='BWS-PKG - Set bwsbranch to bywater-v' --pretty=format:"%H" --no-patch | head -n 1 };
+    my $last_commit_before_cherry_picks = qx{ git log --grep='$stop_commit' --pretty=format:"%H" --no-patch | head -n 1 };
     $last_commit_before_cherry_picks =~ s/^\s+|\s+$//g;
-    my $last_commit_before_cherry_picks_oneline = qx{ git log --grep='BWS-PKG - Set bwsbranch to bywater-v' --pretty=oneline --no-patch | head -n 1 };
+    my $last_commit_before_cherry_picks_oneline = qx{ git log --grep='$stop_commit' --pretty=oneline --no-patch | head -n 1 };
     $last_commit_before_cherry_picks_oneline =~ s/^\s+|\s+$//g;
     say "LAST COMMIT BEFORE CHERRY PICKS: $last_commit_before_cherry_picks_oneline";
 
