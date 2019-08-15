@@ -7,8 +7,9 @@ ENV DO_IT 0
 RUN apt-get -y update \
     && apt-get -y install \
        git-core \
-       libjson-perl \
        libfile-slurp-perl \
+       libjson-perl \
+       libwww-perl \
     && rm -rf /var/cache/apt/archives/* \
     && rm -rf /var/lib/api/lists/*
 

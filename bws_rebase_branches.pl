@@ -7,6 +7,7 @@ use strict;
 use File::Slurp;
 use FindBin qw($Bin);
 use JSON;
+use LWP::UserAgent;
 
 my $json     = from_json( read_file("$Bin/branches.json") );
 my $branches = $json->{branches};
@@ -30,6 +31,8 @@ if ( $ENV{TRAVIS_BRANCH} ) {
     }
 }
 
+my $ua = LWP::UserAgent->new;
+
 say "Removing existing github repo, if any";
 qx{ git remote rm github };
 say "Adding github repo";
@@ -44,6 +47,25 @@ my $head = qx{ git rev-parse HEAD };
 $head =~ s/^\s+|\s+$//g;    # Trim whitespace
 say "HEAD: $head";
 my $heads = { bywater => $head };
+
+if ( $ENV{SLACK_URL} ) {
+    my @commits = qx{ git log --pretty=format:'%s' --no-patch | head -n 500 };
+    pop @commits;    # Get rid of our first bwsbranch commit
+    foreach my $c (@commits) {
+        if ( $c =~ /bwsbranch/ ) {
+            last; # Stop when we get to the previous bwsbranch commit
+        }
+        else {
+            say "FOUND NEW COMMIT: $c";
+            $ua->post(
+                $ENV{SLACK_URL},
+                Content_Type => 'application/json',
+                Content =>
+                  to_json( { text => "`$c` added to `$ENV{TRAVIS_BRANCH}`" } ),
+            );
+        }
+    }
+}
 
 foreach my $branch (@$branches) {
     my $branch_name    = $branch->{name};
