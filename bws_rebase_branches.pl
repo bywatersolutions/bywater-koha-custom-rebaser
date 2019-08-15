@@ -51,6 +51,7 @@ foreach my $branch (@$branches) {
     my $base_branch    = $branch->{base_branch};
     my $stop_commit    = $branch->{stop_commit};
 
+    $base_branch ||= 'bywater';
     $stop_commit ||= 'BWS-PKG - Set bwsbranch to bywater-v';
 
     say "\nWORKING ON $branch_name";
@@ -100,7 +101,7 @@ foreach my $branch (@$branches) {
     }
 
     if ($success) {
-        qx{ sed -i -e 's/bywater/$branch_name/' misc/bwsbranch };
+        qx{ sed -i -e 's/$base_branch/$branch_name/' misc/bwsbranch };
         my $branch = qx{ cat misc/bwsbranch };
         qx{ git commit -a -m "$message_prefix - Set bwsbranch to $branch" };
         say "COMMITED bwsbranch UPDATE: " . qx{ git rev-parse HEAD };
