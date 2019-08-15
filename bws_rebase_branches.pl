@@ -48,7 +48,7 @@ $head =~ s/^\s+|\s+$//g;    # Trim whitespace
 say "HEAD: $head";
 my $heads = { bywater => $head };
 
-if ( $ENV{SLACK_URL} ) {
+if ( $ENV{SLACK_URL_NEW_COMMITS} ) {
     my @commits = qx{ git log --pretty=format:'%s' --no-patch | head -n 500 };
     pop @commits;    # Get rid of our first bwsbranch commit
     foreach my $c (@commits) {
@@ -58,7 +58,7 @@ if ( $ENV{SLACK_URL} ) {
         else {
             say "FOUND NEW COMMIT: $c";
             $ua->post(
-                $ENV{SLACK_URL},
+                $ENV{SLACK_URL_NEW_COMMITS},
                 Content_Type => 'application/json',
                 Content =>
                   to_json( { text => "`$c` added to `$ENV{TRAVIS_BRANCH}`" } ),
