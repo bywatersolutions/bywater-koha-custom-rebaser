@@ -93,6 +93,7 @@ foreach my $branch (@$branches) {
     $last_commit_before_cherry_picks =~ s/^\s+|\s+$//g;
     my $last_commit_before_cherry_picks_oneline = qx{ git log --grep='$stop_commit' --pretty=oneline --no-patch | head -n 1 };
     $last_commit_before_cherry_picks_oneline =~ s/^\s+|\s+$//g;
+    say "LOOKING FOR STOP COMMIT: " . $stop_commit;
     say "LAST COMMIT BEFORE CHERRY PICKS: $last_commit_before_cherry_picks_oneline";
 
     my @commits_since =
