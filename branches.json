@@ -41,11 +41,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "vokal",
-      "message_prefix": "VOKAL",
-      "base_branch": "bywater"
-    },
-    {
       "name": "washoe",
       "message_prefix": "WASHOE",
       "base_branch": "bywater"
