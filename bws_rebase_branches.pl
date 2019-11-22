@@ -14,18 +14,18 @@ my $branches = $json->{branches};
 
 $ENV{DO_IT} //= 0;
 
-die "No ENV set for TRAVIS_BRANCH" unless $ENV{TRAVIS_BRANCH};
+die "No ENV set for KOHA_BRANCH" unless $ENV{KOHA_BRANCH};
 die "No ENV set for GITHUB_TOKEN"  unless $ENV{GITHUB_TOKEN};
 
-say "TRAVIS_BRANCH: $ENV{TRAVIS_BRANCH}";
+say "KOHA_BRANCH: $ENV{KOHA_BRANCH}";
 say "DO_IT: $ENV{DO_IT}";
 
 say "RUNNING IN TEST MODE: Rebased branches will not be pushed!"
   unless $ENV{DO_IT};
 
 # If run from travis, we only want to run for newly pushed bywater base branches
-if ( $ENV{TRAVIS_BRANCH} ) {
-    unless ( $ENV{TRAVIS_BRANCH} =~ /^bywater-v/ ) {
+if ( $ENV{KOHA_BRANCH} ) {
+    unless ( $ENV{KOHA_BRANCH} =~ /^bywater-v/ ) {
         say "Not a base ByWater branch, exiting.";
         exit 0;
     }
@@ -61,7 +61,7 @@ if ( $ENV{SLACK_URL_NEW_COMMITS} ) {
                 $ENV{SLACK_URL_NEW_COMMITS},
                 Content_Type => 'application/json',
                 Content =>
-                  to_json( { text => "`$c` added to `$ENV{TRAVIS_BRANCH}`" } ),
+                  to_json( { text => "`$c` added to `$ENV{KOHA_BRANCH}`" } ),
             );
         }
     }
