@@ -26,11 +26,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "plano",
-      "message_prefix": "PLANO",
-      "base_branch": "bywater"
-    },
-    {
       "name": "pasco",
       "message_prefix": "PASCO",
       "base_branch": "bywater"
