@@ -1,17 +1,14 @@
-FROM debian:stable-slim
+FROM alpine:3
 
 LABEL maintainer="kyle@bywatersolutions.com"
 
 ENV DO_IT 0
 
-RUN apt-get -y update \
-    && apt-get -y install \
-       git-core \
-       libfile-slurp-perl \
-       libjson-perl \
-       libwww-perl \
-    && rm -rf /var/cache/apt/archives/* \
-    && rm -rf /var/lib/api/lists/*
+RUN apk add --no-cache \
+    git \
+    perl-file-slurp \
+    perl-json \
+    perl-libwww
 
 RUN git config --global user.email "kyle@bywatersolutions.com"
 RUN git config --global user.name "Kyle M Hall"
