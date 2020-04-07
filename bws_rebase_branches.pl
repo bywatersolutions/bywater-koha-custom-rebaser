@@ -13,10 +13,12 @@ my $json     = from_json( read_file("$Bin/branches.json") );
 my $branches = $json->{branches};
 
 $ENV{DO_IT} //= 0;
+$ENV{GITHUB_REPOSITORY} //= "bywatersolutions/bywater-koha";
 
 die "No ENV set for KOHA_BRANCH" unless $ENV{KOHA_BRANCH};
 die "No ENV set for GITHUB_TOKEN"  unless $ENV{GITHUB_TOKEN};
 
+say "GITHUB_REPOSITORY: $ENV{GITHUB_REPOSITORY}";
 say "KOHA_BRANCH: $ENV{KOHA_BRANCH}";
 say "DO_IT: $ENV{DO_IT}";
 
@@ -36,7 +38,7 @@ my $ua = LWP::UserAgent->new;
 say "Removing existing github repo, if any";
 qx{ git remote rm github };
 say "Adding github repo";
-qx{ git remote add github https://$ENV{GITHUB_TOKEN}\@github.com/bywatersolutions/bywater-koha.git };
+qx{ git remote add github https://$ENV{GITHUB_TOKEN}\@github.com/$ENV{GITHUB_REPOSITORY}.git };
 say "Fetching github remote";
 qx{ git fetch -v --progress github };
 say "Done fetching github remote";
