@@ -81,7 +81,7 @@ foreach my $branch (@$branches) {
     say "\nWORKING ON $branch_name";
     $head = $heads->{$base_branch};
 
-    my $branch_to_rebase = qx{ git branch -r | grep $branch_name | tail -1 };
+    my $branch_to_rebase = qx{ git branch -r | grep $branch_name- | tail -1 };
     say "FOUND *$branch_to_rebase*";
     $branch_to_rebase =~ s/^\s+|\s+$//g;    # Trim whitespace from both ends
     say "AFTER CLEANUP: *$branch_to_rebase*";
