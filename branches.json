@@ -41,11 +41,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "vatech",
-      "message_prefix": "VATECH",
-      "base_branch": "bywater"
-    },
-    {
       "name": "clic",
       "message_prefix": "CLIC",
       "base_branch": "barcodeprfx",
