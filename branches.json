@@ -36,11 +36,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "washoe",
-      "message_prefix": "WASHOE",
-      "base_branch": "bywater"
-    },
-    {
       "name": "clic",
       "message_prefix": "CLIC",
       "base_branch": "barcodeprfx",
