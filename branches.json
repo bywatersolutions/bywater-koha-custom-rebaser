@@ -6,8 +6,8 @@
       "base_branch": "bywater"
     },
     {
-      "name": "ajaxon",
-      "message_prefix": "AJAXON",
+      "name": "twilio",
+      "message_prefix": "TWILIO",
       "base_branch": "bywater"
     },
     {
