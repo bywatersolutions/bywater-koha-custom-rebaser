@@ -36,6 +36,11 @@
       "base_branch": "bywater"
     },
     {
+      "name": "montgomery",
+      "message_prefix": "MONTGOMERY",
+      "base_branch": "bywater",
+    },
+    {
       "name": "clic",
       "message_prefix": "CLIC",
       "base_branch": "barcodeprfx",
