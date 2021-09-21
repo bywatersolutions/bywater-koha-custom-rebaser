@@ -11,6 +11,11 @@
       "base_branch": "bywater"
     },
     {
+      "name": "montgomery",
+      "message_prefix": "MONTGOMERY",
+      "base_branch": "bywater"
+    },
+    {
       "name": "arlington",
       "message_prefix": "ARLINGTON",
       "base_branch": "bywater"
