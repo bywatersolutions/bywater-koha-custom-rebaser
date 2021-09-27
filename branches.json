@@ -6,11 +6,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "twilio",
-      "message_prefix": "TWILIO",
-      "base_branch": "bywater"
-    },
-    {
       "name": "montgomery",
       "message_prefix": "MONTGOMERY",
       "base_branch": "bywater"
