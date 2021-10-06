@@ -1,13 +1,13 @@
 {
   "branches": [
     {
-      "name": "barcodeprfx",
-      "message_prefix": "BARCODE PREFIXES",
+      "name": "montgomery",
+      "message_prefix": "MONTGOMERY",
       "base_branch": "bywater"
     },
     {
-      "name": "montgomery",
-      "message_prefix": "MONTGOMERY",
+      "name": "barcodeprfx",
+      "message_prefix": "BARCODE PREFIXES",
       "base_branch": "bywater"
     },
     {
