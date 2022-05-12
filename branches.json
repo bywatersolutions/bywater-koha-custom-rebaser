@@ -16,11 +16,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "bluehill",
-      "message_prefix": "BLUEHILL",
-      "base_branch": "bywater"
-    },
-    {
       "name": "mtpl",
       "message_prefix": "MTPL",
       "base_branch": "bywater"
