@@ -35,8 +35,8 @@ if ( $ENV{KOHA_BRANCH} ) {
 
 my $ua = LWP::UserAgent->new;
 
-say "Setting current dir as safe directory";
-qx{ git config --global --add safe.directory . };
+say "Setting /kohaclone dir as safe directory";
+qx{ git config --global --add safe.directory /kohaclone };
 say "Removing existing github repo, if any";
 qx{ git remote rm github };
 say "Adding github repo";
