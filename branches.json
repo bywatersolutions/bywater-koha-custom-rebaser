@@ -26,11 +26,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "roundrock",
-      "message_prefix": "ROUND ROCK",
-      "base_branch": "bywater"
-    },
-    {
       "name": "cdoc",
       "message_prefix": "CDOC",
       "base_branch": "bywater"
