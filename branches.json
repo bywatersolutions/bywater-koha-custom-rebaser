@@ -33,13 +33,13 @@
     {
       "name": "clic",
       "message_prefix": "CLIC",
-      "base_branch": "barcodeprfx",
+      "base_branch": "bywater",
       "stop_commit": "BARCODE PREFIXES - Set bwsbranch to barcodeprfx-v"
     },
     {
       "name": "masscat",
       "message_prefix": "MASSCAT",
-      "base_branch": "barcodeprfx",
+      "base_branch": "bywater",
       "stop_commit": "BARCODE PREFIXES - Set bwsbranch to barcodeprfx-v"
     }
   ]
