@@ -33,12 +33,12 @@
     {
       "name": "clic",
       "message_prefix": "CLIC",
-      "base_branch": "bywater",
+      "base_branch": "bywater"
     },
     {
       "name": "masscat",
       "message_prefix": "MASSCAT",
-      "base_branch": "bywater",
+      "base_branch": "bywater"
     }
   ]
 }
