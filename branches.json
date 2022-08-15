@@ -26,14 +26,14 @@
       "base_branch": "bywater"
     },
     {
-      "name": "cdoc",
-      "message_prefix": "CDOC",
-      "base_branch": "bywater"
-    },
-    {
       "name": "clic",
       "message_prefix": "CLIC",
       "base_branch": "bywater"
+    },
+    {
+      "name": "cdoc",
+      "message_prefix": "CDOC",
+      "base_branch": "clic"
     },
     {
       "name": "masscat",
