@@ -11,11 +11,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "mtpl",
-      "message_prefix": "MTPL",
-      "base_branch": "bywater"
-    },
-    {
       "name": "pacifica",
       "message_prefix": "PACIFICA",
       "base_branch": "bywater"
