@@ -11,11 +11,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "pacifica",
-      "message_prefix": "PACIFICA",
-      "base_branch": "bywater"
-    },
-    {
       "name": "clams",
       "message_prefix": "CLAMS",
       "base_branch": "bywater"
