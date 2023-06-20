@@ -6,18 +6,8 @@
       "base_branch": "bywater"
     },
     {
-      "name": "arlington",
-      "message_prefix": "ARLINGTON",
-      "base_branch": "bywater"
-    },
-    {
       "name": "clams",
       "message_prefix": "CLAMS",
-      "base_branch": "bywater"
-    },
-    {
-      "name": "clic",
-      "message_prefix": "CLIC",
       "base_branch": "bywater"
     },
     {
