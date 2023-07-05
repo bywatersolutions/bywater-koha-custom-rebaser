@@ -13,7 +13,12 @@
     {
       "name": "cdoc",
       "message_prefix": "CDOC",
-      "base_branch": "clic"
+      "base_branch": "bywater"
+    },
+    {
+      "name": "cuyahoga",
+      "message_prefix": "CUYAHOGA",
+      "base_branch": "bywater"
     },
     {
       "name": "masscat",
