@@ -6,16 +6,6 @@
       "base_branch": "bywater"
     },
     {
-      "name": "clams",
-      "message_prefix": "CLAMS",
-      "base_branch": "bywater"
-    },
-    {
-      "name": "cdoc",
-      "message_prefix": "CDOC",
-      "base_branch": "bywater"
-    },
-    {
       "name": "cuyahoga",
       "message_prefix": "CUYAHOGA",
       "base_branch": "bywater"
