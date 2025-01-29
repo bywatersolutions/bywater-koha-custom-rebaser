@@ -1,11 +1,6 @@
 {
   "branches": [
     {
-      "name": "montgomery",
-      "message_prefix": "MONTGOMERY",
-      "base_branch": "bywater"
-    },
-    {
       "name": "cuyahoga",
       "message_prefix": "CUYAHOGA",
       "base_branch": "bywater"
