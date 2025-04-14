@@ -1,11 +1,6 @@
 {
   "branches": [
     {
-      "name": "cuyahoga",
-      "message_prefix": "CUYAHOGA",
-      "base_branch": "bywater"
-    },
-    {
       "name": "masscat",
       "message_prefix": "MASSCAT",
       "base_branch": "bywater"
