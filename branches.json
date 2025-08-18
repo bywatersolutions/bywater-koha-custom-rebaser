@@ -4,6 +4,11 @@
       "name": "masscat",
       "message_prefix": "MASSCAT",
       "base_branch": "bywater"
+    },
+    {
+      "name": "montgomery",
+      "message_prefix": "MONTGOMERY",
+      "base_branch": "bywater"
     }
   ]
 }
