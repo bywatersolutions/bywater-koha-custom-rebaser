@@ -9,6 +9,11 @@
       "name": "montgomery",
       "message_prefix": "MONTGOMERY",
       "base_branch": "bywater"
+    },
+    {
+      "name": "mainlib",
+      "message_prefix": "MAINLIB",
+      "base_branch": "montgomery"
     }
   ]
 }
