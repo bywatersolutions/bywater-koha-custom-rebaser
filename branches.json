@@ -13,7 +13,8 @@
     {
       "name": "mainlib",
       "message_prefix": "MAINLIB",
-      "base_branch": "montgomery"
+      "base_branch": "montgomery",
+      "stop_commit": "MONTGOMERY - Set bwsbranch to montgomery-v"
     }
   ]
 }
