@@ -25,19 +25,22 @@
       "name": "masscatsd",
       "message_prefix": "MASSCATSD",
       "base_branch": "masscat",
-      "stop_commit": "MASSCAT - Set bwsbranch to masscat-v"
+      "stop_commit": "MASSCAT - Set bwsbranch to masscat-v",
+      "fast": true
     },
     {
       "name": "montgomerysd",
       "message_prefix": "MONTGOMERYSD",
       "base_branch": "montgomery",
-      "stop_commit": "MONTGOMERY - Set bwsbranch to montgomery-v"
+      "stop_commit": "MONTGOMERY - Set bwsbranch to montgomery-v",
+      "fast": true
     },
     {
       "name": "mainlibsd",
       "message_prefix": "MAINLIBSD",
       "base_branch": "mainlib",
-      "stop_commit": "MAINLIB - Set bwsbranch to mainlib-v"
+      "stop_commit": "MAINLIB - Set bwsbranch to mainlib-v",
+      "fast": true
     }
   ]
 }

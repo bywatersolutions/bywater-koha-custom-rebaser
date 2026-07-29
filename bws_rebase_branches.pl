@@ -77,6 +77,9 @@ foreach my $branch (@$branches) {
     my $base_branch    = $branch->{base_branch};
     my $stop_commit    = $branch->{stop_commit};
 
+    # Branches that only repackage their base don't need the test suite run again
+    my $fast = $branch->{fast} ? ' [FAST]' : '';
+
     $base_branch ||= 'bywater';
     $stop_commit ||= 'BWS-PKG - Set bwsbranch to bywater-v';
 
@@ -130,7 +133,8 @@ foreach my $branch (@$branches) {
     if ($success) {
         qx{ sed -i -e 's/$base_branch/$branch_name/' misc/bwsbranch };
         my $branch = qx{ cat misc/bwsbranch };
-        qx{ git commit -a -m "$message_prefix - Set bwsbranch to $branch" };
+        chomp $branch;
+        qx{ git commit -a -m "$message_prefix - Set bwsbranch to $branch$fast" };
         say "COMMITED bwsbranch UPDATE: " . qx{ git rev-parse HEAD };
         my $new_branch = qx{ cat misc/bwsbranch };
 
