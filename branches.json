@@ -1,11 +1,6 @@
 {
   "branches": [
     {
-      "name": "masscat",
-      "message_prefix": "MASSCAT",
-      "base_branch": "bywater"
-    },
-    {
       "name": "montgomery",
       "message_prefix": "MONTGOMERY",
       "base_branch": "bywater"
@@ -15,11 +10,6 @@
       "message_prefix": "MAINLIB",
       "base_branch": "montgomery",
       "stop_commit": "MONTGOMERY - Set bwsbranch to montgomery-v"
-    },
-    {
-      "name": "bywatersd",
-      "message_prefix": "BYWATERSD",
-      "base_branch": "bywater"
     }
   ]
 }
